@@ -1,10 +1,10 @@
 const user = 
     `INSERT INTO user (username, email, password, created_date, updated_date) 
-    VALUES (:username, :email, :hashedPassword, :now, :now)`;
+    VALUES (:username, :email, :password, :now, :now)`;
 
 const product = 
     `INSERT INTO product (name, description, brand_id, category_id, created_date, updated_date) 
-    VALUES (:name, :description, :brandId, :categoryId, :now, :now)`
+    VALUES (:name, :description, :brand_id, :category_id, :now, :now)`
 
 const brand = 
     `INSERT INTO brand (name, created_date, updated_date) 
@@ -14,4 +14,8 @@ const category =
     `INSERT INTO category (name, created_date, updated_date) 
     VALUES (:name, :now, :now)`;
 
-module.exports = { user, product, brand, category }
+const user_favorite = 
+    `INSERT INTO user_favorite (note, user_id, product_id, created_date, updated_date) 
+    VALUES (:note, :user_id, :product_id, :now, :now)`;
+
+module.exports = { user, product, brand, category, user_favorite };

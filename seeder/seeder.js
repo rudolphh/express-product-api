@@ -69,8 +69,7 @@ const hashedPassword = async (password) => {
 const createUser = async (connection, record) => {
   try {
     const hashedPassword = await bcrypt.hash(record.password, 10);
-    record.hashedPassword = hashedPassword;
-    delete record.password;
+    record.password = hashedPassword;
     
     return insertRecord(connection, insertSql.user, record);
   } catch (err) {
@@ -113,6 +112,7 @@ const seedDatabase = async () => {
     await connection.query(`USE ${process.env.DB_NAME}`);
     
     // drop all tables if exists
+    dropTable(connection, 'user_favorite');
     dropTable(connection, 'user');
     dropTable(connection, 'product');
     dropTable(connection, 'brand');
@@ -123,6 +123,7 @@ const seedDatabase = async () => {
     createTable(connection, createTableSql.brand);
     createTable(connection, createTableSql.category);
     createTable(connection, createTableSql.product);
+    createTable(connection, createTableSql.user_favorite);
     
     // add records to user table
 
@@ -159,9 +160,15 @@ const seedDatabase = async () => {
     // add records to product table
     insertRecord(connection, insertSql.product, {
       name: "tomato juice", description: "for sunday mary mix", 
-      brandId: 1, categoryId: 1 });
+      brand_id: 1, category_id: 1 });
 
-      
+    // use a delay so that the users are created by now
+    setTimeout(() => {
+      insertRecord(connection, insertSql.user_favorite, {
+        note: "so good with green olives", user_id: 2, product_id: 1
+      });
+    }, 1000);
+
   } catch (err) {
     console.error(err);
   }

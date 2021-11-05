@@ -42,5 +42,18 @@ const product = `
         CONSTRAINT fk_brand_id FOREIGN KEY ( brand_id ) REFERENCES brand(id),
         CONSTRAINT fk_category_id FOREIGN KEY ( category_id ) REFERENCES category(id)
     );`;
+
+const user_favorite = `
+    CREATE TABLE IF NOT EXISTS user_favorite (
+        id INT NOT NULL AUTO_INCREMENT,
+        note TEXT,
+        user_id INT NOT NULL,
+        product_id INT NOT NULL,
+        created_date TIMESTAMP,
+        updated_date TIMESTAMP,
+        PRIMARY KEY ( id ),
+        CONSTRAINT fk_user_id FOREIGN KEY ( user_id ) REFERENCES user(id),
+        CONSTRAINT fk_product_id FOREIGN KEY ( product_id ) REFERENCES product(id)
+    );`;
     
-module.exports = { user, brand, category, product };
+module.exports = { user, brand, category, product, user_favorite };
