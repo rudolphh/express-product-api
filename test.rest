@@ -22,7 +22,7 @@ content-type: application/json
 # send with a token (text after 'Authorization:') received from running a post to /login
 GET http://localhost:3033/users
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTI0Mjk3LCJleHAiOjE2MzYxMjQ4OTd9.WW5Id7TeWWzn_QxvN-hbC_3D1cNbn4fRkhQpx4srMeE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjM2MTY4NjY3LCJleHAiOjE2MzYxNzA0Njd9.NG4jR9nUDiA6IwfMKMvrGX2wpPodgQiNctExu2gWIeg
 
 
 ### GET /products

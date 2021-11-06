@@ -11,21 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(require("./middlewares/db-connection")); // req.db connection attached to all requests
 
-// const mysqlPool = require("./database/db-pool");
-
-// (async () => {
-//   try {
-//     // get a connection from the pool
-//     req.db = await mysqlPool.getConnection();
-//     req.db.config.namedPlaceholders = true;
-
-//     await req.db.query(`SET SESSION sql_mode = "TRADITIONAL"`);
-//     await req.db.query(`SET time_zone = '-7:00'`);
-//     await req.db.query(`USE ${process.env.DB_NAME}`);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// })();
 
 const authRouter = require("./routes/auth");
 app.use("/", authRouter);

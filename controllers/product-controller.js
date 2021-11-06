@@ -5,37 +5,30 @@ const joinQuery = `
     ON p.brand_id = b.id 
     LEFT JOIN category c 
     ON p.category_id = c.id
+    WHERE (:brand_id IS NULL OR brand_id = :brand_id)
+      AND (:category_id IS NULL OR category_id = :category_id);
 `;
 
 const allProducts = async (req, res) => {
   const { brand_id, category_id } = req.query;
-  let message;
 
   try {
-    let finalQuery = joinQuery + ` WHERE (:brand_id IS NULL OR brand_id = :brand_id)
-      AND (:category_id IS NULL OR category_id = :category_id);`
-
-    const [results] = await req.db.query(finalQuery, { brand_id, category_id });
+    const [results] = await req.db.query(joinQuery, { brand_id, category_id });
+    let message;
 
     if (brand_id) {
-      message =
-        results.length > 0
-          ? `all products of brand: ${results[0].brand}`
-          : `no products for brand id: ${brand_id}`;
+        message = results.length > 0
+            ? `all products of brand: ${results[0].brand}`
+            : `no products for brand id: ${brand_id}`;
     } else if (category_id) {
-      message =
-        results.length > 0
+      message = results.length > 0
           ? `all products of category: ${results[0].category}`
           : `no products for category id: ${category_id}`;
     } else {
       message = "all products";
     }
 
-    res.send({
-      success: true,
-      message,
-      data: results,
-    });
+    res.send({ success: true, message, data: results });
   } catch (err) {
     console.error(err);
     res.send({ error: err.message });

@@ -93,6 +93,10 @@ const seedDatabase = async () => {
     createTable(connection, createTableSql.category);
     createTable(connection, createTableSql.product);
     createTable(connection, createTableSql.user_favorite);
+
+    await connection.query(`
+      CREATE UNIQUE INDEX brand_category_id ON product (brand_id, category_id);`);
+
     
     // add records to user table
 
