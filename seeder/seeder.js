@@ -4,9 +4,7 @@ const createTableSql = require('./create-table-sql');
 const insertSql = require('./insert-record-sql');
 
 
-
 /// insert record helpers
-
 const nowDateToTimestamp = () => {
   let now = new Date(); // get current date time
   
@@ -29,14 +27,6 @@ const insertRecord = async (connection, sql, record) => {
   }
 };
 
-const hashedPassword = async (password) => {
-  try {
-    return hashedPassword;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 const createUser = async (connection, record) => {
   try {
     const hashedPassword = await bcrypt.hash(record.password, 10);
@@ -50,7 +40,6 @@ const createUser = async (connection, record) => {
 
 
 /// droo/create table helpers
-
 const dropTable = async (connection, name) => {
   await connection.query(`
     DROP TABLE IF EXISTS ${name};`);
@@ -68,7 +57,6 @@ const createTable = async (connection, sql) => {
 
 
 /// seeder
-
 const seedDatabase = async () => {
 
   try {
