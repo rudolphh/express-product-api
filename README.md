@@ -22,7 +22,7 @@ TOKEN_EXPIRES_IN=30m
 REFRESH_TOKEN_EXPIRES_IN=60m
 SECRET_KEY=somekindofsecrettext
 ```
-These can be adjusted to your preference, but ***DB_NAME*** is the name of the database schema the seeder will use to automatically create some initial data for you in the database.
+These can be adjusted to your preference, including ***DB_NAME***, the name of the database schema the seeder will use to automatically create some initial data for you in the database.
 
 ### MySQL Installation
 Make sure to have **[MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/)** installed for your OS.
