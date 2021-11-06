@@ -1,0 +1,14 @@
+[
+    {
+        "name": "soup",
+        "description": "cheddar broccoli",
+        "brand_id": 2,
+        "category_id": 3
+    },
+    {
+        "name": "tomato juice",
+        "description": "for sunday mary mix",
+        "brand_id": 1,
+        "category_id": 1
+    }
+]

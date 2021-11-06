@@ -1,16 +1,15 @@
 const mysqlPool = require("../database/db-pool");
 const bcrypt = require("bcrypt");
-const createTableSql = require('./create-table-sql');
-const insertSql = require('./insert-record-sql');
-
+const createTableSql = require("./create-table-sql");
+const insertSql = require("./insert-record-sql");
 
 /// insert record helpers
 const nowDateToTimestamp = () => {
   let now = new Date(); // get current date time
-  
+
   //adjust for timezone
   //now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  
+
   //convert to timestamp format (utc when not adjusted)
   now = now.toISOString().slice(0, 19).replace("T", " ");
   return now;
@@ -23,7 +22,7 @@ const insertRecord = async (connection, sql, record) => {
     return results.insertId;
   } catch (err) {
     console.error(err);
-    return err;// so we can get err code down the line
+    return err; // so we can get err code down the line
   }
 };
 
@@ -31,13 +30,12 @@ const createUser = async (connection, record) => {
   try {
     const hashedPassword = await bcrypt.hash(record.password, 10);
     record.password = hashedPassword;
-    
+
     return insertRecord(connection, insertSql.user, record);
   } catch (err) {
     console.error(err);
   }
 };
-
 
 /// droo/create table helpers
 const dropTable = async (connection, name) => {
@@ -49,31 +47,30 @@ const createTable = async (connection, sql) => {
   try {
     // create table in database
     await connection.query(sql);
-
   } catch (err) {
     console.error(err);
   }
 };
 
-
 /// seeder
 const seedDatabase = async () => {
-
   try {
     const connection = await mysqlPool.getConnection();
     // enable mysql2 named placeholders syntax
     connection.config.namedPlaceholders = true;
-    
+
     // create database schema
-    await connection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
+    await connection.query(
+      `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`
+    );
     await connection.query(`USE ${process.env.DB_NAME}`);
-    
+
     // drop all tables if exists
-    dropTable(connection, 'user_favorite');
-    dropTable(connection, 'user');
-    dropTable(connection, 'product');
-    dropTable(connection, 'brand');
-    dropTable(connection, 'category');
+    dropTable(connection, "user_favorite");
+    dropTable(connection, "user");
+    dropTable(connection, "product");
+    dropTable(connection, "brand");
+    dropTable(connection, "category");
 
     // create all tables (brand/category before product)
     createTable(connection, createTableSql.user);
@@ -86,65 +83,42 @@ const seedDatabase = async () => {
     await connection.query(`
       CREATE INDEX brand_category_id ON product (brand_id, category_id);`);
 
-    
+
     // add records to user table
-    createUser(connection, {
-      username: "imi", email: "imi@rudyah.com", 
-      password: "loveDaddy3"
-    });
+    const users = require('./data/users.json');
+    for ( let i = 0; i < users.length; i++ ){
+      createUser(connection, users[i]);
+    }
 
-    createUser(connection, {
-      username: "rudy", email: "dev@rudyah.com", 
-      password: "loveGod1"
-    });
-    
-    createUser(connection, {
-      username: "honey", email: "sammi@rudyah.com", 
-      password: "loveLove33"
-    });
+    // add records to brand table
+    const brands = require('./data/brands.json');
+    for ( let i = 0; i < brands.length; i++ ){
+      insertRecord(connection, insertSql.brand, brands[i]);
+    }
 
-
-    // add record to brand table
-    insertRecord(connection, insertSql.brand, {
-      name: "clamato"
-    });
-
-    insertRecord(connection, insertSql.brand, {
-      name: "campbells"
-    });
-    
     // add records to category table
-    insertRecord(connection, insertSql.category, {
-      name: 'juices'
-    });
-
-    insertRecord(connection, insertSql.category, {
-      name: 'bread'
-    });
-
-    insertRecord(connection, insertSql.category, {
-      name: 'soup'
-    });
+    const categories = require('./data/categories.json');
+    for ( let i = 0; i < categories.length; i++ ){
+      insertRecord(connection, insertSql.category, categories[i]);
+    }
 
     // add records to product table
-    insertRecord(connection, insertSql.product, {
-      name: "soup", description: "cheddar broccoli", brand_id: 2, category_id: 3 });
-    
-    insertRecord(connection, insertSql.product, {
-      name: "tomato juice", description: "for sunday mary mix", 
-      brand_id: 1, category_id: 1 });
+    const products = require('./data/products.json');
+    for ( let i = 0; i < products.length; i++ ){
+      insertRecord(connection, insertSql.product, products[i]);
+    }
 
     // use a delay so that the users are created by now
     setTimeout(() => {
       insertRecord(connection, insertSql.user_favorite, {
-        note: "so good with green olives", user_id: 2, product_id: 2
+        note: "so good with green olives",
+        user_id: 2,
+        product_id: 2,
       });
     }, 1000);
-
   } catch (err) {
     console.error(err);
   }
-  
 };
 
 module.exports = { seedDatabase, createUser, insertRecord };
