@@ -1,5 +1,5 @@
 const { insertRecord } = require("../seeder/seeder");
-const insertSql = require("../seeder/insert-record-sql");
+const insertSql = require("../seeder/sql/insert-record-sql");
 
 const allUsers = async (req, res) => {
   // if the token is valid the middleware allowed us to reach the route

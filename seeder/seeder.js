@@ -1,7 +1,7 @@
 const mysqlPool = require("../database/db-pool");
 const bcrypt = require("bcrypt");
-const createTableSql = require("./create-table-sql");
-const insertSql = require("./insert-record-sql");
+const createTableSql = require("./sql/create-table-sql");
+const insertSql = require("./sql/insert-record-sql");
 
 /// insert record helpers
 const nowDateToTimestamp = () => {
