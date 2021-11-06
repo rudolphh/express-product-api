@@ -53,7 +53,8 @@ const user_favorite = `
         updated_date TIMESTAMP,
         PRIMARY KEY ( id ),
         CONSTRAINT fk_user_id FOREIGN KEY ( user_id ) REFERENCES user(id),
-        CONSTRAINT fk_product_id FOREIGN KEY ( product_id ) REFERENCES product(id)
+        CONSTRAINT fk_product_id FOREIGN KEY ( product_id ) REFERENCES product(id),
+        CONSTRAINT unq_userId_productId unique(user_id, product_id)
     );`;
     
 module.exports = { user, brand, category, product, user_favorite };

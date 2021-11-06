@@ -5,36 +5,6 @@ const insertSql = require('./insert-record-sql');
 
 
 
-const createBrand = async () => {
-
-};
-
-const createCategory = async () => {
-
-};
-
-
-
-const createProduct = async (connection, name, description, brandId, categoryId) => {
-
-  try {
-    let now = nowDateToTimestamp();
-
-    const [results] = await connection.query(
-      `INSERT INTO product (name, description, brand_id, category_id, created_date, updated_date) 
-        VALUES (:name, :description, :brandId, :categoryId, :now, :now)`,
-      { name, description, brandId, categoryId, now }
-    );
-
-    return results.insertId;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-
-
-
 /// insert record helpers
 
 const nowDateToTimestamp = () => {
@@ -55,6 +25,7 @@ const insertRecord = async (connection, sql, record) => {
     return results.insertId;
   } catch (err) {
     console.error(err);
+    return err;// so we can get err code down the line
   }
 };
 
@@ -78,7 +49,6 @@ const createUser = async (connection, record) => {
 };
 
 
-
 /// droo/create table helpers
 
 const dropTable = async (connection, name) => {
@@ -95,7 +65,6 @@ const createTable = async (connection, sql) => {
     console.error(err);
   }
 };
-
 
 
 /// seeder
@@ -143,21 +112,32 @@ const seedDatabase = async () => {
     });
 
 
-    // add records to product table
-    insertRecord(connection, insertSql.product, {
-      name: "soup", description: "cheddar broccoli" });
-
     // add record to brand table
     insertRecord(connection, insertSql.brand, {
       name: "clamato"
     });
 
+    insertRecord(connection, insertSql.brand, {
+      name: "campbells"
+    });
+    
     // add records to category table
     insertRecord(connection, insertSql.category, {
       name: 'juices'
-    })
+    });
+
+    insertRecord(connection, insertSql.category, {
+      name: 'bread'
+    });
+
+    insertRecord(connection, insertSql.category, {
+      name: 'soup'
+    });
 
     // add records to product table
+    insertRecord(connection, insertSql.product, {
+      name: "soup", description: "cheddar broccoli", brand_id: 2, category_id: 3 });
+    
     insertRecord(connection, insertSql.product, {
       name: "tomato juice", description: "for sunday mary mix", 
       brand_id: 1, category_id: 1 });
@@ -165,7 +145,7 @@ const seedDatabase = async () => {
     // use a delay so that the users are created by now
     setTimeout(() => {
       insertRecord(connection, insertSql.user_favorite, {
-        note: "so good with green olives", user_id: 2, product_id: 1
+        note: "so good with green olives", user_id: 2, product_id: 2
       });
     }, 1000);
 
@@ -175,4 +155,4 @@ const seedDatabase = async () => {
   
 };
 
-module.exports = { seedDatabase, createUser };
+module.exports = { seedDatabase, createUser, insertRecord };

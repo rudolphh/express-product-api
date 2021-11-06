@@ -1,35 +1,3 @@
-
-### GET /hello
-GET http://localhost:3030/hello
-
-### POST /hello
-# this will just return whatever is in the request body
-POST http://localhost:3030/hello
-content-type: application/json
-
-{
-    "hello" : "world"
-}
-
-# GET /hello/world will return a web page but
-### POST /hello/world will return a body property with the object we send
-POST http://localhost:3030/hello/world
-content-type: application/json
-
-{
-    "hello" : "world"
-}
-
-### GET /hello-world/:id will return whatever value we put for id
-GET http://localhost:3030/hello-world/3
-
-### GET /users
-# send with a token (text after 'Authorization:') received from running a post to /login
-GET http://localhost:3033/users
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjM2MDg4MzAxLCJleHAiOjE2MzYwODg5MDF9.6L_1ykdHZEgVpfQ6zCUpkCk5RhW9NFETGz8fv8jaY60
-
-
 ### POST /login
 # copy to token given and paste into Authorization: {token} for /users endpoint
 POST http://localhost:3033/login
@@ -49,3 +17,60 @@ content-type: application/json
     "email" : "newb11@rudyah.com",
     "password" : "newPass"
 }
+
+### GET /users
+# send with a token (text after 'Authorization:') received from running a post to /login
+GET http://localhost:3033/users
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTI0Mjk3LCJleHAiOjE2MzYxMjQ4OTd9.WW5Id7TeWWzn_QxvN-hbC_3D1cNbn4fRkhQpx4srMeE
+
+
+### GET /products
+GET http://localhost:3033/products
+
+### GET /products
+GET http://localhost:3033/products?brand_id=1
+
+### GET /products
+GET http://localhost:3033/products?category_id=3
+
+### GET /product/brands
+GET http://localhost:3033/product/brands
+
+### GET /product/categories
+GET http://localhost:3033/product/categories
+
+
+
+### GET /user/favorites
+GET http://localhost:3033/user/favorites
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+
+### POST /user/favorite
+# this will just return whatever is in the request body
+POST http://localhost:3033/user/favorite
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+
+{
+    "note": "feel good food mmmmm", 
+    "product_id": 1
+}
+
+### PUT /user/favorite/:id
+PUT http://localhost:3033/user/favorite/2
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+
+{
+    "note": "feel good food; mmmmm mmmm good"
+}
+
+### DELETE /user/favorite/:id
+DELETE http://localhost:3033/user/favorite/3
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+
+
+

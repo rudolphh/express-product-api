@@ -3,6 +3,7 @@ const mysql = require('mysql2/promise');
 // using environment variables injected from .env file
 // create a connection pool to the mysql server
 const pool = mysql.createPool({
+    connectionLimit: 30,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
