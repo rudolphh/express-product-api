@@ -94,12 +94,12 @@ const seedDatabase = async () => {
     createTable(connection, createTableSql.product);
     createTable(connection, createTableSql.user_favorite);
 
+    // unique index of product table foreign keys as optional query parameters
     await connection.query(`
-      CREATE UNIQUE INDEX brand_category_id ON product (brand_id, category_id);`);
+      CREATE INDEX brand_category_id ON product (brand_id, category_id);`);
 
     
     // add records to user table
-
     createUser(connection, {
       username: "imi", email: "imi@rudyah.com", 
       password: "loveDaddy3"

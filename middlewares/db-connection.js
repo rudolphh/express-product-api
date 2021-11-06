@@ -17,4 +17,12 @@ const dbConnection = async (req, res, next) => {
     next();
 };
 
-module.exports = dbConnection;
+const connectionRelease = (req, res, next) => {
+    res.on('finish', function(){
+      // release connection back to pool when response is finished
+      req.db.release();
+    });
+    next();
+};
+
+module.exports = { dbConnection, connectionRelease };
