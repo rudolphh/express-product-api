@@ -9,7 +9,7 @@ const joinQuery = `
       AND (:category_id IS NULL OR category_id = :category_id);
 `;
 
-const allProducts = async (req, res) => {
+const allProducts = async (req, res, next) => {
   const { brand_id, category_id } = req.query;
 
   try {
@@ -31,23 +31,21 @@ const allProducts = async (req, res) => {
     res.send({ success: true, message, data: results });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
-const allProductBrands = async (req, res) => {
+const allProductBrands = async (req, res, next) => {
   try {
     const [results] = await req.db.query(`SELECT * FROM brand`);
     res.send({ success: true, message: "all product brands", data: results });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
-const allProductCategories = async (req, res) => {
+const allProductCategories = async (req, res, next) => {
   try {
     const [results] = await req.db.query(`SELECT * FROM category`);
     res.send({
@@ -57,9 +55,8 @@ const allProductCategories = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
 module.exports = { allProducts, allProductBrands, allProductCategories };

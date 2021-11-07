@@ -8,11 +8,6 @@ const express = require('express');
 // is provided to the app.use to expand the routes of the application
 const auth = express.Router();// could call it 'router' but 'auth' better choice
 
-// for parsing raw json or x-www-form-urlencoded as the body of the request
-auth.use(express.json());
-auth.use(express.urlencoded({ extended: true }));
-
-
 // bring in the authController object with its functions 
 // for handling auth routes requests and responses
 const authController = require('../controllers/auth-controller');

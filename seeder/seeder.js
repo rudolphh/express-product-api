@@ -1,4 +1,4 @@
-const mysqlPool = require("../database/db-pool");
+const { getConnection } = require("../database/db-pool");
 const bcrypt = require("bcrypt");
 const createTableSql = require("./sql/create-table-sql");
 const insertSql = require("./sql/insert-record-sql");
@@ -55,7 +55,7 @@ const createTable = async (connection, sql) => {
 /// seeder
 const seedDatabase = async () => {
   try {
-    const connection = await mysqlPool.getConnection();
+    const connection = await getConnection();
     // enable mysql2 named placeholders syntax
     connection.config.namedPlaceholders = true;
 

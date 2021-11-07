@@ -1,3 +1,5 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MjYyNDYyLCJleHAiOjE2MzYyNjQyNjJ9.m9URv7aFJnVPENbT7M3y6aZqP7uId_wW4U8HC9I5b0U
+
 ### POST /login
 # copy to token given and paste into Authorization: {token} for /users endpoint
 POST http://localhost:3033/login
@@ -22,7 +24,7 @@ content-type: application/json
 # send with a token (text after 'Authorization:') received from running a post to /login
 GET http://localhost:3033/users
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjM2MTY4NjY3LCJleHAiOjE2MzYxNzA0Njd9.NG4jR9nUDiA6IwfMKMvrGX2wpPodgQiNctExu2gWIeg
+Authorization: Bearer {{token}}
 
 
 ### GET /products
@@ -45,13 +47,13 @@ GET http://localhost:3033/product/categories
 ### GET /user/favorites
 GET http://localhost:3033/user/favorites
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+Authorization: Bearer {{token}}
 
 ### POST /user/favorite
 # this will just return whatever is in the request body
 POST http://localhost:3033/user/favorite
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+Authorization: Bearer {{token}}
 
 {
     "note": "feel good food mmmmm", 
@@ -61,16 +63,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxN
 ### PUT /user/favorite/:id
 PUT http://localhost:3033/user/favorite/2
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+Authorization: Bearer {{token}}
 
 {
     "note": "feel good food; mmmmm mmmm good"
 }
 
 ### DELETE /user/favorite/:id
-DELETE http://localhost:3033/user/favorite/3
+DELETE http://localhost:3033/user/favorite/2
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM2MTM2MzAxLCJleHAiOjE2MzYxMzgxMDF9.moQWhqrVrs010r3Z4PLcY-DHhxq27_ayak73ih6j2Es
+Authorization: Bearer {{token}}
 
 
 

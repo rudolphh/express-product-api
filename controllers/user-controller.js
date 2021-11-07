@@ -1,7 +1,7 @@
 const { insertRecord } = require("../seeder/seeder");
 const insertSql = require("../seeder/sql/insert-record-sql");
 
-const allUsers = async (req, res) => {
+const allUsers = async (req, res, next) => {
   // if the token is valid the middleware allowed us to reach the route
   // and we have access to the userId for queries
   try {
@@ -9,12 +9,11 @@ const allUsers = async (req, res) => {
     res.send({ success: true, message: "all users", data: results });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
-const allFavorites = async (req, res) => {
+const allFavorites = async (req, res, next) => {
 
   const userId = req.userId;
   try {
@@ -27,12 +26,11 @@ const allFavorites = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
-const addFavorite = async (req, res) => {
+const addFavorite = async (req, res, next) => {
   const userId = req.userId;
   req.body.user_id = userId;
   try {
@@ -51,12 +49,11 @@ const addFavorite = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
-const updateFavoriteNote = async (req, res) => {
+const updateFavoriteNote = async (req, res, next) => {
 
   const userId = req.userId;
   const { note } = req.body;
@@ -73,12 +70,11 @@ const updateFavoriteNote = async (req, res) => {
     res.send({ success: true, message });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
-const deleteFavorite = async (req, res) => {
+const deleteFavorite = async (req, res, next) => {
   
   const userId = req.userId;
   try {
@@ -93,9 +89,8 @@ const deleteFavorite = async (req, res) => {
     res.send({ success: true, message });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
 module.exports = { allUsers, allFavorites, addFavorite, updateFavoriteNote, deleteFavorite };

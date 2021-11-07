@@ -16,7 +16,7 @@ const createTokens = (payload) => {
 };
 
 // handler for login route
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   // req.body is an object which contains the body values sent in the post request
   // we use destructuring here to extract the values into variables
   const { username, password } = req.body;
@@ -48,14 +48,12 @@ const login = async (req, res) => {
     res.send({ user, token, refresh_token });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  // release the db connection given from the pool in dbConnection middleware
-  req.db.release();
 };
 
 // handler for register route
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   const { username, email, password } = req.body;
   // do validation here or use library
 
@@ -72,9 +70,8 @@ const register = async (req, res) => {
     res.status(201).send({ id: insertedId, token, refresh_token });
   } catch (err) {
     console.error(err);
-    res.send({ error: err.message });
+    next(err);
   }
-  req.db.release();
 };
 
 // export these functions as an object to be brought into a router

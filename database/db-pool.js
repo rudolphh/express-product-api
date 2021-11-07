@@ -13,4 +13,17 @@ const pool = mysql.createPool({
     // port: process.env.DB_PORT, 
 });
 
-module.exports = pool;
+const getConnection = async () => {
+    // get a connection from the pool
+    const connection = await pool.getConnection();
+    connection.config.namedPlaceholders = true;
+    
+    await connection.query(`SET SESSION sql_mode = "TRADITIONAL"`);
+    await connection.query(`SET time_zone = '-7:00'`);
+    await connection.query(`USE ${process.env.DB_NAME}`);
+    
+    //return connection;
+    return connection;
+};
+
+module.exports = { getConnection };
