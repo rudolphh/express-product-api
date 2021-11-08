@@ -11,7 +11,7 @@ const verifyJwt = require('../middlewares/verify-jwt');
 const userController = require('../controllers/user-controller');
 
 // so we can apply middleware to specific routes before the route handler
-user.get('/users', verifyJwt, userController.allUsers);
+user.get('/users', userController.allUsers);
 user.get('/user/favorites', verifyJwt, userController.allFavorites);
 user.post('/user/favorite', verifyJwt, userController.addFavorite);
 user.put('/user/favorite/:id', verifyJwt, userController.updateFavoriteNote);

@@ -1,4 +1,4 @@
-const { getConnection } = require("../database/db-pool");
+const { getConnection } = require("../database/db");
 const bcrypt = require("bcrypt");
 const createTableSql = require("./sql/create-table-sql");
 const insertSql = require("./sql/insert-record-sql");
@@ -19,10 +19,9 @@ const insertRecord = async (connection, sql, record) => {
   try {
     record.now = nowDateToTimestamp();
     const [results] = await connection.query(sql, record);
-    return results.insertId;
+    return results;
   } catch (err) {
-    console.error(err);
-    return err; // so we can get err code down the line
+    throw err;
   }
 };
 
@@ -31,7 +30,8 @@ const createUser = async (connection, record) => {
     const hashedPassword = await bcrypt.hash(record.password, 10);
     record.password = hashedPassword;
 
-    return insertRecord(connection, insertSql.user, record);
+    const results = await insertRecord(connection, insertSql.user, record);
+    return results.insertId;
   } catch (err) {
     console.error(err);
   }
@@ -49,6 +49,7 @@ const createTable = async (connection, sql) => {
     await connection.query(sql);
   } catch (err) {
     console.error(err);
+    next(err);
   }
 };
 

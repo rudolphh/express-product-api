@@ -39,17 +39,17 @@ const addFavorite = async (req, res, next) => {
       insertSql.user_favorite,
       req.body
     );
-    if (result.errno === 1062)
-      throw new Error("The product is already a favorite of the user");
 
     res.status(201).send({
       success: true,
       message: `user favorite successfully created`,
-      data: { insertId: result },
+      //data: { insertId: result },
     });
   } catch (err) {
     console.error(err);
-    next(err);
+    let error = new Error("The product is already a favorite of the user");
+    error.errno = 1062;
+    next(error);
   }
 };
 
