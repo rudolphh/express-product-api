@@ -15,8 +15,8 @@ POST http://localhost:3033/register
 content-type: application/json
 
 {
-    "username" : "newbie",
-    "email" : "newb11@rudyah.com",
+    "username" : "newb",
+    "email" : "newb@rudyah.com",
     "password" : "newPass"
 }
 
