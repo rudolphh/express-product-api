@@ -16,7 +16,7 @@ content-type: application/json
 
 {
     "username" : "newb",
-    "email" : "newb@rudyah.com",
+    "email" : "noob@rudyah.com",
     "password" : "newPassword"
 }
 
