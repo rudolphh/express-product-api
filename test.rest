@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM3NDc2MTQ0LCJleHAiOjE2Mzc0Nzc5NDR9.tBeTLXjvcu7ahGKCzlgVkWE4l19N-l5F_TFRihm__k4
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjM3NDc2MTQ0LCJleHAiOjE2Mzc0Nzc5NDR9.tBeTLXjvcu7ahGKCzlgVkWE4l19N-l5F_TFRihm__k4h
 
 ### POST /login
 # copy to token given and paste into Authorization: {token} for /users endpoint
